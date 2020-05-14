@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>scouter.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>CE6E09D621E27F20001E45F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE6E09EA21E27F22001E45F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE6E09F521E27F22001E45F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

@@ -16,13 +16,13 @@ struct bikz: Decodable {
     let bikes: [jumpBike]
 }
 
-class jumpBike: NSObject, MKAnnotation, Decodable {
+class jumpBike: Scooter, Decodable {
     let bike_id: String
+    var title: String? = NSLocalizedString("Jump", comment: "Jump Scooter")
     let name: String
     let jump_ebike_battery_level: String
     let lon: Double
     let lat: Double
-    let coordinate: CLLocationCoordinate2D
     
     init(bike_id: String, name: String, jump_ebike_battery_level: String, lon: Double, lat: Double) {
         self.bike_id = bike_id
@@ -30,8 +30,9 @@ class jumpBike: NSObject, MKAnnotation, Decodable {
         self.jump_ebike_battery_level = jump_ebike_battery_level
         self.lon = lon
         self.lat = lat
-        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        super.init()
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        super.init(scooter: Scooter.ScooterType.jump, coordinate: coordinate, bat: Double(jump_ebike_battery_level))
+        
     }
     
     enum MyKeys: String, CodingKey {
@@ -56,4 +57,18 @@ class jumpBike: NSObject, MKAnnotation, Decodable {
         return jump_ebike_battery_level
     }
 }
+var jumpList = [jumpBike]()
 
+func loadJump(mapView: MKMapView) {
+    do {
+        let url = URL(string: "https://la.jumpbikes.com/opendata/free_bike_status.json")
+        let json = try String(contentsOf: url!).data(using: .utf8)!
+        let myStruct = try JSONDecoder().decode(tainerz.self, from: json)
+        jumpList = myStruct.data.bikes
+        mapView.addAnnotations(jumpList)
+        
+    }
+    catch _ {
+        print("ERROR: Jump Bike JSON")
+    }
+}

@@ -13,36 +13,50 @@ struct theTainer {
     let birds: [birdInfo]
 }
 
-class birdInfo: NSObject, MKAnnotation {
-    var title: String? = NSLocalizedString("BIRD_TITLE", comment: "Bird Scooter")
+struct birdStruct {
+    var GUID: String
+    var version: String
+    var auth: String
+}
+var birdLogin = birdStruct(GUID: "129d7aac-2d4d-4eb7-9a56-5ceb0150bb5e", version: "4.41.0", auth: "")
+class birdInfo: Scooter {
+    var title: String? = NSLocalizedString("Bird", comment: "Bird Scooter")
     var subtitle: String? = NSLocalizedString("BIRD_SUBTITLE", comment: "Open in app ->")
     let battery_level: Int
-    let coordinate: CLLocationCoordinate2D
     let markerTintColor = UIColor.black
+
     
     init(battery_level: Int, lat: Double, long: Double) {
         self.battery_level = battery_level
-        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        super.init(scooter: Scooter.ScooterType.bird, coordinate: coordinate, bat: Double(battery_level))
+    }
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
 }
 
 var birdGang = [birdInfo]()
 
-func genToken() throws {
-    guard let url = URL(string: "https://api.bird.co/user/login") else {
+func genToken(map: MKMapView, closure: @escaping (MKMapView) -> ()) {
+    guard let url = URL(string: "https://api.birdapp.com/user/login") else {
         print("Problem in loadBIRD")
         return
     }
-    
+    let emailNum = Int.random(in: 10000..<999999)
     
     var urlRequest = URLRequest(url: url)
-    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
     urlRequest.httpMethod = "POST"
-    urlRequest.addValue("45c9c6cf-ee86-435f-a814-493e969d9ee9", forHTTPHeaderField: "Device-id")
+    //Set headers
+    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    urlRequest.addValue("Bird/4.41.0 (co.bird.Ride; build:37; iOS 12.3.1) Alamofire/4.41.0", forHTTPHeaderField: "User-Agent")
+    urlRequest.addValue(birdLogin.version, forHTTPHeaderField: "App-Version")
+    urlRequest.addValue(birdLogin.GUID, forHTTPHeaderField: "Device-Id")
     urlRequest.addValue("ios", forHTTPHeaderField: "Platform")
-    
-    
-    urlRequest.httpBody = "{\"email\": \"natik87@wildwood.org\"}".data(using: .utf8)
+    //Set json body
+    let emailBody = "{\"email\": \"" + String(emailNum) + "@gmail.com\"}"
+    urlRequest.httpBody = emailBody.data(using: .utf8)
     let config = URLSessionConfiguration.default
     let session = URLSession(configuration: config)
     
@@ -63,6 +77,11 @@ func genToken() throws {
             print("responseString = \(String(describing: responseString))")
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: JSONSerialization.ReadingOptions()) as? NSDictionary
+                let token = jsonResponse!["token"] as! String
+                print(token)
+                birdLogin.auth = "Bird " + token
+                closure(map)
+                return
             }
             catch _ {
                 print("error")
@@ -70,57 +89,61 @@ func genToken() throws {
         }
         task.resume()
     }
+    return
 }
-//GUID: String, token: String
+
 func getBirds(mapView: MKMapView) {
-//    var urlComponents = URLComponents()
-//    urlComponents.scheme = "https"
-//    urlComponents.host = "api.bird.co"
-//    urlComponents.path = "/bird/nearby"
-//    let lat = URLQueryItem(name: "latitude", value: "34.019561")
-//    let lon = URLQueryItem(name: "longitude", value: "-118.450766")
-//    let rad = URLQueryItem(name: "radius", value: "1000")
-//    urlComponents.queryItems = [lat, lon, rad]
-//    guard let url = urlComponents.url else { fatalError("couldn't create URL")}
-//
-//    var request = URLRequest(url: url)
-//    request.httpMethod = "GET"
-//    request.setValue("6bef12ce-a88a-4112-bd00-8a750f4d9ab7", forHTTPHeaderField: "Device-id")
-//    request.addValue("Bird eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBVVRIIiwidXNlcl9pZCI6ImMxY2MzZWZlLTU3YzktNDQ3My1hNmYyLWE0NzY4MjM2ZjEwMCIsImRldmljZV9pZCI6IjZiZWYxMmNlLWE4OGEtNDExMi1iZDAwLThhNzUwZjRkOWFiNyIsImV4cCI6MTU3ODg1NTY5Nn0.QWuKkRDuG0-5mS1Ox7-JXa1lHKqFNYap_ppWFJYQ6vM", forHTTPHeaderField: "Authorization")
-//    request.addValue("{\"latitude\":34.019561,\"longitude\":-118.450766,\"altitude\":500,\"accuracy\":100,\"speed\":-1,\"heading\":-1}", forHTTPHeaderField: "Location")
-//    request.addValue("3.0.5", forHTTPHeaderField: "App-version")
-//    //headers!
-//
-//    let config = URLSessionConfiguration.default
-//    let session = URLSession(configuration: config)
-    let url = URL(string: "https://mds.bird.co/gbfs/santamonica/free_bikes")
-
+    var urlComponents = URLComponents()
+    urlComponents.scheme = "https"
+    urlComponents.host = "api.birdapp.com"
+    urlComponents.path = "/bird/nearby"
+    let latVal = String(userLoc.coordinate.latitude)
+    let lonVal = String(userLoc.coordinate.longitude)
+    let lat = URLQueryItem(name: "latitude", value: latVal)
+    let lon = URLQueryItem(name: "longitude", value: lonVal)
+    let rad = URLQueryItem(name: "radius", value: "1000")
+    urlComponents.queryItems = [lat, lon, rad]
+    guard let url = urlComponents.url else { fatalError("couldn't create URL")}
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue(birdLogin.GUID, forHTTPHeaderField: "Device-id")
+    request.addValue(birdLogin.auth, forHTTPHeaderField: "Authorization")
+    request.addValue("{\"latitude\":"+latVal+",\"longitude\":"+lonVal+",\"altitude\":500,\"accuracy\":100,\"speed\":-1,\"heading\":-1}", forHTTPHeaderField: "Location")
+    request.addValue(birdLogin.version, forHTTPHeaderField: "App-version")
+    request.addValue("application/json", forHTTPHeaderField: "Content-type")
+    //headers!
+    
+    let config = URLSessionConfiguration.default
+    let session = URLSession(configuration: config)
+    
+    let dataTask = URLSession.shared.dataTask(with: request) {
+        data,response,error in
+        print("Bird session begin")
         do {
-            let responseData = try String(contentsOf: url!).data(using: .utf8)
-            //print(responseData)
-            let responseString = String(data: responseData!, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
-            let jsonResponse = try JSONSerialization.jsonObject(with: responseData!, options: JSONSerialization.ReadingOptions()) as? NSDictionary
-            //var j = birdInfo(battery_level: jsonResponse["birds"][0]["battery_level"], lat: jsonResponse[0][0][4][1], long: jsonResponse[0][0][4][0])
-            var jsonData = jsonResponse!["data"] as! NSDictionary?
-            var jsonArry = jsonData!["bikes"] as! [NSDictionary?]
-            var jsonDict: NSDictionary?
-           
-            var jsonLat: Double?
-            var jsonLon: Double?
-            var jsonBat = 55
-            
-            for scooter in jsonArry {
-                jsonLat = scooter!["lat"] as! Double?
-                jsonLon = scooter!["lon"] as! Double?
-                birdGang.append(birdInfo(battery_level: jsonBat, lat: jsonLat!, long: jsonLon!))
+            if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
+                var jsonData = jsonResult["birds"] as! Array<NSDictionary>?
+                var jsonLoc: NSDictionary?
+                var jsonLat: Double?
+                var jsonLon: Double?
+                var jsonBat: Int
+                
+                for scooter in jsonData! {
+                    jsonLoc = (scooter["location"] as! NSDictionary)
+                    jsonLat = jsonLoc?["latitude"] as! Double?
+                    jsonLon = jsonLoc?["longitude"] as! Double?
+                    jsonBat = (scooter["battery_level"] as! Int?)!
+                    birdGang.append(birdInfo(battery_level: jsonBat, lat: jsonLat!, long: jsonLon!))
+                }
+                mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(birdInfo.self))
+                mapView.addAnnotations(birdGang)
+                //Use GCD to invoke the completion handler on the main thread
             }
-            mapView.addAnnotations(birdGang)
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
-        catch _ {
-            print("error")
-        }
-        
+    }
+    dataTask.resume()
 }
 
+var close:(MKMapView) -> () = {map in getBirds(mapView: map)}
 

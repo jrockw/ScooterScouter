@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		CE21682221E7E74800AC46E8 /* bird.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE21682121E7E74800AC46E8 /* bird.swift */; };
 		CE21682421EA641900AC46E8 /* lime.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE21682321EA641900AC46E8 /* lime.swift */; };
-		CE4436A321F8D736005EE837 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4436A221F8D736005EE837 /* IntroController.swift */; };
+		CE347EAA2305EB55000D9D9D /* scooterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE347EA92305EB55000D9D9D /* scooterAnnotationView.swift */; };
+		CE347EAC2305ED5B000D9D9D /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE347EAB2305ED5B000D9D9D /* Scooter.swift */; };
 		CE6E09DB21E27F20001E45F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E09DA21E27F20001E45F5 /* AppDelegate.swift */; };
 		CE6E09DD21E27F20001E45F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E09DC21E27F20001E45F5 /* ViewController.swift */; };
 		CE6E09E021E27F20001E45F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE6E09DE21E27F20001E45F5 /* Main.storyboard */; };
@@ -18,7 +19,9 @@
 		CE6E09F021E27F22001E45F5 /* adamappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E09EF21E27F22001E45F5 /* adamappTests.swift */; };
 		CE6E09FB21E27F22001E45F5 /* adamappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E09FA21E27F22001E45F5 /* adamappUITests.swift */; };
 		CE6E0A0921E28C02001E45F5 /* jump.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E0A0821E28C02001E45F5 /* jump.swift */; };
+		CEAF2AE62291FB7500474A9C /* CusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2AE52291FB7500474A9C /* CusterAnnotationView.swift */; };
 		CECC72222203E5F7007E02C6 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC72212203E5F7007E02C6 /* CardViewController.swift */; };
+		CECC72282208A732007E02C6 /* lyft.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECC72272208A731007E02C6 /* lyft.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +44,8 @@
 /* Begin PBXFileReference section */
 		CE21682121E7E74800AC46E8 /* bird.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bird.swift; sourceTree = "<group>"; };
 		CE21682321EA641900AC46E8 /* lime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lime.swift; sourceTree = "<group>"; };
-		CE4436A221F8D736005EE837 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
+		CE347EA92305EB55000D9D9D /* scooterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scooterAnnotationView.swift; sourceTree = "<group>"; };
+		CE347EAB2305ED5B000D9D9D /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
 		CE6E09D721E27F20001E45F5 /* adamapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = adamapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6E09DA21E27F20001E45F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE6E09DC21E27F20001E45F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -56,7 +60,9 @@
 		CE6E09FA21E27F22001E45F5 /* adamappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = adamappUITests.swift; sourceTree = "<group>"; };
 		CE6E09FC21E27F22001E45F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6E0A0821E28C02001E45F5 /* jump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jump.swift; sourceTree = "<group>"; };
+		CEAF2AE52291FB7500474A9C /* CusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusterAnnotationView.swift; sourceTree = "<group>"; };
 		CECC72212203E5F7007E02C6 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		CECC72272208A731007E02C6 /* lyft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lyft.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,15 +113,11 @@
 		CE6E09D921E27F20001E45F5 /* adamapp */ = {
 			isa = PBXGroup;
 			children = (
-				CE6E09DA21E27F20001E45F5 /* AppDelegate.swift */,
-				CE6E0A0821E28C02001E45F5 /* jump.swift */,
-				CE21682121E7E74800AC46E8 /* bird.swift */,
-				CE21682321EA641900AC46E8 /* lime.swift */,
-				CE6E09DC21E27F20001E45F5 /* ViewController.swift */,
-				CECC72212203E5F7007E02C6 /* CardViewController.swift */,
-				CE4436A221F8D736005EE837 /* IntroController.swift */,
+				CECC7225220606EE007E02C6 /* Scooter */,
+				CECC722622060703007E02C6 /* ViewControllers */,
 				CE6E09DE21E27F20001E45F5 /* Main.storyboard */,
 				CE6E09E121E27F22001E45F5 /* Assets.xcassets */,
+				CE6E09DA21E27F20001E45F5 /* AppDelegate.swift */,
 				CE6E09E321E27F22001E45F5 /* LaunchScreen.storyboard */,
 				CE6E09E621E27F22001E45F5 /* Info.plist */,
 			);
@@ -138,6 +140,29 @@
 				CE6E09FC21E27F22001E45F5 /* Info.plist */,
 			);
 			path = adamappUITests;
+			sourceTree = "<group>";
+		};
+		CECC7225220606EE007E02C6 /* Scooter */ = {
+			isa = PBXGroup;
+			children = (
+				CE6E0A0821E28C02001E45F5 /* jump.swift */,
+				CE21682121E7E74800AC46E8 /* bird.swift */,
+				CECC72272208A731007E02C6 /* lyft.swift */,
+				CE347EAB2305ED5B000D9D9D /* Scooter.swift */,
+				CE21682321EA641900AC46E8 /* lime.swift */,
+			);
+			name = Scooter;
+			sourceTree = "<group>";
+		};
+		CECC722622060703007E02C6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF2AE52291FB7500474A9C /* CusterAnnotationView.swift */,
+				CE347EA92305EB55000D9D9D /* scooterAnnotationView.swift */,
+				CE6E09DC21E27F20001E45F5 /* ViewController.swift */,
+				CECC72212203E5F7007E02C6 /* CardViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,10 +296,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4436A321F8D736005EE837 /* IntroController.swift in Sources */,
+				CE347EAA2305EB55000D9D9D /* scooterAnnotationView.swift in Sources */,
 				CECC72222203E5F7007E02C6 /* CardViewController.swift in Sources */,
+				CEAF2AE62291FB7500474A9C /* CusterAnnotationView.swift in Sources */,
 				CE21682421EA641900AC46E8 /* lime.swift in Sources */,
 				CE6E09DD21E27F20001E45F5 /* ViewController.swift in Sources */,
+				CE347EAC2305ED5B000D9D9D /* Scooter.swift in Sources */,
+				CECC72282208A732007E02C6 /* lyft.swift in Sources */,
 				CE6E0A0921E28C02001E45F5 /* jump.swift in Sources */,
 				CE21682221E7E74800AC46E8 /* bird.swift in Sources */,
 				CE6E09DB21E27F20001E45F5 /* AppDelegate.swift in Sources */,
